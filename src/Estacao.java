@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Estação que agrega patinetes.
- * Complete os métodos marcados com //TODO.
+ * Complete os métodos marcados com //TODO (Tarefas 1, 2 e 3).
  */
 public class Estacao {
     private String codigo;
@@ -24,15 +24,24 @@ public class Estacao {
      * @return true se adicionou; false se nulo ou código duplicado
      */
     public boolean adicionar(Patinete p) {
-        //TODO
-        return false;
+        if (p == null) {
+            return false;
+        }
+        for (Patinete existente : patinetes) {
+            if (existente.getCodigo().equals(p.getCodigo())) {
+                return false;
+            }
+        }
+        patinetes.add(p);
+        return true;
     }
 
     /**
      * Localiza pelo código; se estiver disponivel, inicia aluguel.
+     * @return true se iniciou o aluguel; false se não encontrou ou não está disponivel
      */
     public boolean liberarDisponivel(String codigo) {
-        //TODO
+        //TODO Tarefa 1
         return false;
     }
 
@@ -41,13 +50,23 @@ public class Estacao {
     }
 
     public int totalDisponiveis() {
-        //TODO
-        return 0;
+        int total = 0;
+        for (Patinete p : patinetes) {
+            if ("disponivel".equals(p.estado())) {
+                total++;
+            }
+        }
+        return total;
     }
 
     public int totalEmUso() {
-        //TODO
-        return 0;
+        int total = 0;
+        for (Patinete p : patinetes) {
+            if ("em_uso".equals(p.estado())) {
+                total++;
+            }
+        }
+        return total;
     }
 
     /**
@@ -56,7 +75,7 @@ public class Estacao {
      * Só em_uso (sem disponivel) → Double.MAX_VALUE.
      */
     public double aproveitamentoFrota() {
-        //TODO
+        //TODO Tarefa 2
         return 0.0;
     }
 
@@ -66,17 +85,26 @@ public class Estacao {
      * Empate total: false.
      */
     public boolean estaNaFrenteDe(Estacao outra) {
-        //TODO
+        //TODO Tarefa 3
         return false;
     }
 
     /**
-     * Formato sugerido:
      * COD | total=T | disp=D | uso=U | aproveitamento=XX.X%
      * ou aproveitamento=MAX
      */
     public String resumo() {
-        //TODO
-        return "";
+        double apr = aproveitamentoFrota();
+        String aprTxt;
+        if (apr == Double.MAX_VALUE) {
+            aprTxt = "MAX";
+        } else {
+            aprTxt = String.format("%.1f%%", apr * 100.0);
+        }
+        return codigo
+                + " | total=" + totalPatinetes()
+                + " | disp=" + totalDisponiveis()
+                + " | uso=" + totalEmUso()
+                + " | aproveitamento=" + aprTxt;
     }
 }
