@@ -57,12 +57,27 @@ public class EstacaoTest {
 
     @Test
     void deveCalcularAproveitamentoFrota() {
-        //TODO Tarefa 4: testar aproveitamentoFrota em pelo menos dois cenários
-        // (ex.: 1 em uso e 1 disponível → 0.5; só em uso → Double.MAX_VALUE)
+        estacao.adicionar(new Patinete("1111", 80));
+        estacao.adicionar(new Patinete("2222", 80));
+        Patinete p3 = new Patinete("2222", 80);
+        Double aproveitamento = estacao.aproveitamentoFrota();
+        assertEquals(0, aproveitamento, 0.01d);
+
+        p3.iniciarAluguel();
+        assertEquals(0.33, aproveitamento, 0.01d);
+        
+        
+
     }
 
     @Test
     void deveCompararEstacoes() {
-        //TODO Tarefa 5: testar estaNaFrenteDe (maior aproveitamento fica na frente)
+        Estacao estacao2 = new Estacao("E2");
+        estacao.adicionar(new Patinete("1111", 80));
+        estacao.adicionar(new Patinete("2222", 80));
+        estacao2.adicionar(new Patinete("3333", 80));
+        estacao2.adicionar(new Patinete("4444", 80));
+        boolean isNafrente = estacao.estaNaFrenteDe(estacao2);
+        assertTrue(isNafrente);
     }
 }

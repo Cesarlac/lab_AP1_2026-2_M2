@@ -33,4 +33,5 @@ public class PatineteTest {
         Patinete p = new Patinete("12", 50);
         assertEquals("0000", p.getCodigo());
     }
+
 }

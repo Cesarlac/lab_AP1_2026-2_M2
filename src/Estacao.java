@@ -41,7 +41,11 @@ public class Estacao {
      * @return true se iniciou o aluguel; false se não encontrou ou não está disponivel
      */
     public boolean liberarDisponivel(String codigo) {
-        //TODO Tarefa 1
+        for (Patinete patinete : patinetes) {
+            if(this.codigo.equals(codigo) && patinete.iniciarAluguel()){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -75,7 +79,12 @@ public class Estacao {
      * Só em_uso (sem disponivel) → Double.MAX_VALUE.
      */
     public double aproveitamentoFrota() {
-        //TODO Tarefa 2
+        double disponiveis = totalDisponiveis();
+        double emUso = totalEmUso();
+        double aproveitamento = emUso / disponiveis + emUso;
+        if (aproveitamento > 0){
+            return Double.MAX_VALUE;
+        }
         return 0.0;
     }
 
@@ -85,7 +94,15 @@ public class Estacao {
      * Empate total: false.
      */
     public boolean estaNaFrenteDe(Estacao outra) {
-        //TODO Tarefa 3
+
+        if (this.aproveitamentoFrota() > outra.aproveitamentoFrota()){
+            return true;
+        }
+        if(this.aproveitamentoFrota() == outra.aproveitamentoFrota()){
+            if (this.totalDisponiveis() > outra.totalDisponiveis()){
+                return true;
+            }
+        }
         return false;
     }
 
